@@ -1,15 +1,23 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-// Use Clerk middleware to protect routes and manage user authentication
-export default clerkMiddleware();
+// Define the public routes or any custom routes you want to be accessible without authentication
+const publicRoutes = createRouteMatcher(['/api/uploadthing']);
 
+// Middleware logic
+export default clerkMiddleware((auth, req) => {
+  // If it's not a public route, require authentication
+  if (!publicRoutes(req)) {
+    auth().protect();  // This will handle redirecting to sign-in for unauthenticated users
+  }
+});
+
+// Config for matching routes
 export const config = {
   matcher: [
-    // Apply the middleware to all routes, skipping Next.js internals and static files
-    '/((?!_next|static|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Skip Next.js internals and static files
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico)).*)',
     // Always run for API routes
-    '/api/(.*)',  // Match all API routes
-    '/trpc/(.*)', // Match all tRPC routes
+    '/(api|trpc)(.*)',
   ],
 };
 
