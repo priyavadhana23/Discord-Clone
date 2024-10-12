@@ -4,21 +4,21 @@ import { UploadDropzone } from "@/lib/uploadthing";
 import "@uploadthing/react/styles.css";
 
 interface FileUploadProps{
-    onChange: (url?:string)=> void ;
+    onChange: (url?: string)=> void ;
     value : string;
-    endPoint:"messageFile" | "serverImage"
+    endpoint:"messageFile" | "serverImage"
 }
 
 export const FileUpload=({
     onChange,
     value,
-    endPoint
+    endpoint
 }: FileUploadProps)=>{
     return(
         <UploadDropzone
-        endpoint={endPoint}
+        endpoint={endpoint}
         onClientUploadComplete={(res)=>{
-            onChange (res?. [0].fileUrl);
+            onChange(res?.[0].fileUrl);
         }}
         onUploadError={(error: Error)=>{
             console.log(error);

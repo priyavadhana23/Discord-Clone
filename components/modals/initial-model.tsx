@@ -1,4 +1,5 @@
 "use client";
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,7 +29,7 @@ import { FileUpload } from "../file-upload";
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "server name is requires."
+        message: "server name is required."
     }),
     imageUrl: z.string().min(1, {
         message: "server image is required"
@@ -82,7 +83,7 @@ export const InitialModal = () => {
                                         <FormItem>
                                             <FormControl>
                                                 <FileUpload
-                                                endPoint ="serverImage"
+                                                endpoint ="serverImage"
                                                 value ={field.value}
                                                 onChange ={field.onChange}
                                                 />
@@ -100,7 +101,7 @@ export const InitialModal = () => {
                                             Server Name:
                                         </FormLabel>
                                         <FormControl>
-                                            <input
+                                            <Input
                                                 disabled={isLoading}
                                                 className="mt-2 w-full bg-zinc-300/50 border-0 focus-visible:ring-0 focus:outline-none text-black"
                                                 placeholder="Enter server name"
