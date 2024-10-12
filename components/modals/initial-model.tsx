@@ -1,4 +1,5 @@
 "use client";
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -32,7 +33,7 @@ import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "server name is requires."
+        message: "server name is required."
     }),
     imageUrl: z.string().min(1, {
         message: "server image is required"
