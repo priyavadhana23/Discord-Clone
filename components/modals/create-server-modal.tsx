@@ -62,6 +62,7 @@ export const CreateServerModal = () => {
             console.log("Server created:", response.data);
             form.reset();
             router.refresh();
+            onClose();
         } catch (error) {
             console.log("Error during server creation:", error);
         }
