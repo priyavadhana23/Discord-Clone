@@ -1,6 +1,7 @@
 "use client";
 
-import { Copy, RefreshCw } from "lucide-react";
+import axios from "axios";
+import { Copy, RefreshCw ,Check} from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -15,13 +16,14 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useOrigin } from "@/hooks/use-origin";
+
 import { useState } from "react";
 
 
 
 export const InviteModal = () => {
 
-    const { isOpen, onClose, type,data } = useModal();
+    const { isOpen, onClose, type,data, onOpen } = useModal();
     const origin =useOrigin();
 
     const isModalOpen = isOpen && type === "invite";
@@ -33,8 +35,36 @@ export const InviteModal = () => {
     const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
 
 
-   
+   const onCopy = () => {
+    navigator.clipboard.writeText(inviteUrl);
+    setCopied(true);
 
+    setTimeout(() => 
+    {
+        setCopied(false);
+    },1000);
+   }
+
+   const onNew = async () =>
+   {
+    try
+    {
+        setIsLoading(true);
+        const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+
+        onOpen("invite", {server: response.data});
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+    finally
+    {
+        setIsLoading(false);
+    }
+
+   }
+ 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -51,21 +81,31 @@ export const InviteModal = () => {
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
                         <Input 
+                          disabled={isLoading}
                           className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 "
                           value={inviteUrl}
                           />
-                        <Button size="icon">
+                        <Button 
+                         disabled={isLoading}
+                         onClick={onCopy} size="icon">
+                            {
+                                copied
+                                ? <Check className="w-4 h-4" />
+                                : <Copy  className="w-4 h-4" />
+                            }
                            <Copy className="w-4 h-4"/>
                         </Button>
                     </div> 
                     <Button
-                     variant="link"
-                     size="sm"
-                     className="text-xs test-zinc-500 mt-4"
-                     >
-                        Generate a new Link
-                    <RefreshCw className="w-4 h-4 ml-2"/>
-                    </Button>
+ onClick={onNew}
+ variant="link"
+ size="sm"
+ className="text-xs text-zinc-500 mt-4 bg-yellow-200"
+>
+ Generate a new Link
+ <RefreshCw className="w-4 h-4 ml-2" />
+</Button>
+
                 </div>
             </DialogContent>
         </Dialog>
