@@ -6,9 +6,6 @@ import { NextResponse } from "next/server";
 //import { create } from "domain";
 import { MemberRole } from '@prisma/client';
 
-
-
-
 export async function POST(req: Request) {
     try {
         const { name, imageUrl } = await req.json();
