@@ -93,7 +93,7 @@ export const InviteModal = () => {
                                 ? <Check className="w-4 h-4" />
                                 : <Copy  className="w-4 h-4" />
                             }
-                           <Copy className="w-4 h-4"/>
+                        
                         </Button>
                     </div> 
                     <Button
