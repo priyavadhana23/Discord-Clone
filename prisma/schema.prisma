@@ -3,7 +3,6 @@ generator client {
   binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -29,6 +28,7 @@ model Server {
   id        String   @id @default(uuid())
   name      String
   imageUrl  String   @db.Text
+  inviteCode String  @unique
 
   profileId String
   profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
