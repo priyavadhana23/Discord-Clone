@@ -5,9 +5,6 @@ import { NextResponse } from "next/server";
 //import { create } from "domain";
 import { MemberRole } from '@prisma/client';
 
-
-
-
 export async function POST(req: Request) {
     try {
         const { name, imageUrl } = await req.json();
@@ -21,6 +18,7 @@ export async function POST(req: Request) {
                 profileId: profile.id,
                 name,
                 imageUrl,
+
                 channels:{
                     create: [
                         { name: "general", profileId: profile.id }
@@ -28,7 +26,7 @@ export async function POST(req: Request) {
                 },
                 members:{
                     create:[
-                        {profileId: profile.id, role:MemberRole.ADMIN}
+                        {profileId: profile.id, role: MemberRole.ADMIN }
                     ]
                 }
             }
