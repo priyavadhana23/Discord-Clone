@@ -3,6 +3,7 @@ import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";  
 import { db } from "@/lib/db";
 
+
 interface InviteCodePageProps {
     params:{
         inviteCode: string;
@@ -13,8 +14,7 @@ const InviteCodePage = async ({
     params
 }: InviteCodePageProps) => {
   const profile = await currentProfile();
-
-
+  
   if(!profile)
   {
     return <RedirectToSignIn/>;
@@ -40,7 +40,6 @@ const InviteCodePage = async ({
   {
     return redirect(`/servers/${existingServer.id}`);
   }
-
 
 const server= await db.server.update({
     where:{
