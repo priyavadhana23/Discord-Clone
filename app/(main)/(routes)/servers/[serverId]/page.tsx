@@ -1,4 +1,5 @@
 const ServerIdPage = () =>
+
 {
     return(
      <div>Server ID page</div>
@@ -6,3 +7,4 @@ const ServerIdPage = () =>
 }
 
 export default ServerIdPage;
+]

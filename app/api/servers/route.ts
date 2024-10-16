@@ -18,7 +18,7 @@ export async function POST(req: Request) {
                 profileId: profile.id,
                 name,
                 imageUrl,
-                
+
                 channels:{
                     create: [
                         { name: "general", profileId: profile.id }
